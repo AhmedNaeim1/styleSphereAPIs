@@ -3,7 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
-const reviewRoutes = require("./api/routes/reviews");
+const reviewRoutes = require("./api/routes/reviewsRoute");
+const cartRoutes = require("./api/routes/cartRoute");
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/reviews", reviewRoutes);
+app.use("/cart", cartRoutes);
+
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
