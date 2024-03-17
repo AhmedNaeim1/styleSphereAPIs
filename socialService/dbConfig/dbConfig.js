@@ -1,12 +1,12 @@
-const mysql = require('mysql');
+require("dotenv").config(); // Load environment variables from .env file
+const mysql = require("mysql");
 
-// Create a connection pool to the database
-const pool = mysql.createPool({
-  host: 'localhost',
-  port: 3306, 
-  user: 'ahmed',
-  password: '123Ahmed',
-  database: 'social'
+const pool = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 module.exports = pool;
