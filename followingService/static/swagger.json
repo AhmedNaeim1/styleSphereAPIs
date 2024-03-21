@@ -1,0 +1,314 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "description": "This is an Orders Server based on the OpenAPI 3.0 specification. ",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5010/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "order",
+      "description": "Operations related to orders"
+    }
+  ],
+  "paths": {
+    "/follow": {
+      "post": {
+        "tags": ["order"],
+        "summary": "Create a new following",
+        "description": "Creates a new following relationship",
+        "operationId": "createFollowing",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followerID": {
+                    "type": "integer"
+                  },
+                  "followedID": {
+                    "type": "integer"
+                  },
+                  "followDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Following created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/unfollow": {
+      "delete": {
+        "tags": ["order"],
+        "summary": "Unfollow by followerID and followedID",
+        "description": "Unfollow the user by specifying followerID and followedID",
+        "operationId": "unfollow",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "followerID": {
+                    "type": "integer"
+                  },
+                  "followedID": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Unfollowed successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "result": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Following not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "/followings/followers/{followerID}": {
+      "get": {
+        "tags": ["order"],
+        "summary": "Get followings by followerID",
+        "description": "Returns followings by the specified followerID",
+        "operationId": "getFollowingsByFollowerID",
+        "parameters": [
+          {
+            "name": "followerID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "ID of the follower"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "followid": {
+                        "type": "integer"
+                      },
+                      "followerid": {
+                        "type": "integer"
+                      },
+                      "followedid": {
+                        "type": "integer"
+                      },
+                      "followdate": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Followings not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/followings/followed/{followedID}": {
+      "get": {
+        "tags": ["order"],
+        "summary": "Get followers by followedID",
+        "description": "Returns followers by the specified followedID",
+        "operationId": "getFollowersByFollowedID",
+        "parameters": [
+          {
+            "name": "followedID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "ID of the followed"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "followid": {
+                        "type": "integer"
+                      },
+                      "followerid": {
+                        "type": "integer"
+                      },
+                      "followedid": {
+                        "type": "integer"
+                      },
+                      "followdate": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Followings not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/exists": {
+      "get": {
+        "tags": ["order"],
+        "summary": "Check if following exists",
+        "description": "Check if a following exists between the given followerID and followedID",
+        "operationId": "isFollowingExists",
+        "parameters": [
+          {
+            "name": "followerID",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the follower"
+          },
+          {
+            "name": "followedID",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the followed"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Following exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "exists": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Following": {
+        "type": "object",
+        "properties": {
+          "followid": {
+            "type": "integer"
+          },
+          "followerid": {
+            "type": "integer"
+          },
+          "followedid": {
+            "type": "integer"
+          },
+          "followdate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
