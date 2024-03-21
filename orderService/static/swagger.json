@@ -1,0 +1,250 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "description": "This is an Orders Server based on the OpenAPI 3.0 specification. ",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5001/"
+    }
+  ],
+  
+    "tags": [
+      {
+        "name": "order",
+        "description": "Operations related to orders"
+      }
+    ],
+    
+    "paths": {
+      "/create-order": {
+        "post": {
+          "tags": ["order"],
+          "summary": "Create a new order",
+          "description": "Creates a new order with the provided details",
+          "operationId": "createOrder",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Order created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get-order/{orderID}": {
+        "get": {
+          "tags": ["order"],
+          "summary": "Get order by ID",
+          "description": "Returns the order with the specified ID",
+          "operationId": "getOrderById",
+          "parameters": [
+            {
+              "name": "orderID",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "description": "ID of the order to retrieve"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Order not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/get-orders": {
+        "get": {
+          "tags": ["order"],
+          "summary": "Get all orders",
+          "description": "Returns all orders",
+          "operationId": "getAllOrders",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Order"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Orders not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/update-order-status/{orderID}": {
+        "put": {
+          "tags": ["order"],
+          "summary": "Update order status",
+          "description": "Update the status of the order with the specified ID",
+          "operationId": "updateOrderStatus",
+          "parameters": [
+            {
+              "name": "orderID",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "description": "ID of the order to update"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderStatusUpdate"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order status updated successfully"
+            },
+            "404": {
+              "description": "Order not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/delete-order/{orderID}": {
+        "delete": {
+          "tags": ["order"],
+          "summary": "Delete order by ID",
+          "description": "Deletes the order with the specified ID",
+          "operationId": "deleteOrderById",
+          "parameters": [
+            {
+              "name": "orderID",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "description": "ID of the order to delete"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Order deleted successfully"
+            },
+            "404": {
+              "description": "Order not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Order": {
+          "type": "object",
+          "properties": {
+            "orderID": {
+              "type": "integer"
+            },
+            "userID": {
+              "type": "integer"
+            },
+            "productID": {
+              "type": "integer"
+            },
+            "quantity": {
+              "type": "integer"
+            },
+            "orderDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "price": {
+              "type": "number"
+            },
+            "discount": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "OrderStatusUpdate": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
