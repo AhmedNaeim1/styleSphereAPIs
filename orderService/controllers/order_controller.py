@@ -25,7 +25,7 @@ def create_order_controller():
         return jsonify({'error': str(e)}), 500
 
 
-@order_blueprint.route('/get-order/<int:orderID>', methods=['GET'])
+@order_blueprint.route('/get-order/<string:orderID>', methods=['GET'])
 def get_order_controller(orderID):
     try:
         order = get_order_by_id(orderID)
@@ -50,7 +50,7 @@ def get_all_orders_controller():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-@order_blueprint.route('/get-user-orders/<int:userID>', methods=['GET'])
+@order_blueprint.route('/get-user-orders/<string:userID>', methods=['GET'])
 def get_user_orders_controller(userID):
     try:
         order = get_user_order_by_id(userID)
@@ -62,7 +62,7 @@ def get_user_orders_controller(userID):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-@order_blueprint.route('/update-order-status/<int:orderID>', methods=['PUT'])
+@order_blueprint.route('/update-order-status/<string:orderID>', methods=['PUT'])
 def update_order_status_controller(orderID):
     try:
         request_data = request.get_json()
@@ -74,7 +74,7 @@ def update_order_status_controller(orderID):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-@order_blueprint.route('/delete-order/<int:orderID>', methods=['DELETE'])
+@order_blueprint.route('/delete-order/<string:orderID>', methods=['DELETE'])
 def delete_order_controller(orderID):
     try:
         result = delete_order_by_id(orderID)
