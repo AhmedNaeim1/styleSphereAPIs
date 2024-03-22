@@ -1,4 +1,5 @@
 const authRepository = require("../repositories/authRepository");
+const userRepository = require("../repositories/userRepository");
 const bcrypt = require("bcrypt");
 
 async function signUpUser(req, res) {
@@ -6,9 +7,9 @@ async function signUpUser(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    const existingUser = await authRepository.getUserByEmail(email);
+    const existingUser = await userRepository.getUserByEmail(email);
     if (existingUser) {
-      return res.status(409).json({ message: "Email already exists" });
+      return res.json({ message: "Email already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
