@@ -3832,11 +3832,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tamerhamdy/Desktop/UNI Assignments/Year 4/Graduation Project_StyleSphere/APIs/businessService/businessService/businessService.csproj",
+      "projectUniqueName": "/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/businessService.csproj",
       "projectName": "businessService",
-      "projectPath": "/Users/tamerhamdy/Desktop/UNI Assignments/Year 4/Graduation Project_StyleSphere/APIs/businessService/businessService/businessService.csproj",
+      "projectPath": "/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/businessService.csproj",
       "packagesPath": "/Users/tamerhamdy/.nuget/packages/",
-      "outputPath": "/Users/tamerhamdy/Desktop/UNI Assignments/Year 4/Graduation Project_StyleSphere/APIs/businessService/businessService/obj/",
+      "outputPath": "/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/tamerhamdy/.nuget/NuGet/NuGet.Config"
@@ -3846,7 +3846,7 @@
       ],
       "sources": {
         "/usr/local/share/dotnet/library-packs": {},
-        "/usr/local/share/dotnet/sdk/7.0.313/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.314/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3923,7 +3923,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.313/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.314/RuntimeIdentifierGraph.json"
       }
     }
   }

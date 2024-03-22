@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6kZ7jOcyOPaZviYbgkP++056S7S0ye6AZY1XWn5dVBzAYTymxe1egrLjtxnUrlpJfvEgaRyd5QneCkLfXOUgEg==",
+  "dgSpecHash": "V+d1vv6iGMvExPR3gSodNw/zYETjiW72d8x34vii64Sx2244XZ7L760nFvp4cOCvmLpWMfnhvNz1miOkoKqwOQ==",
   "success": true,
-  "projectFilePath": "/Users/tamerhamdy/Desktop/UNI Assignments/Year 4/Graduation Project_StyleSphere/APIs/businessService/businessService/businessService.csproj",
+  "projectFilePath": "/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/businessService.csproj",
   "expectedPackageFiles": [
     "/Users/tamerhamdy/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/tamerhamdy/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
