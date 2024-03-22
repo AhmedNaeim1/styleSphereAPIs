@@ -5,8 +5,11 @@ import uuid
 
 def is_following_exists(followerID, followedID):
     existing_following = following_model.Following.query.filter_by(followerid=followerID, followedid=followedID).first()
-    return existing_following is not None
-
+    if existing_following:
+        return "exists"
+    else:
+        return "not exists"
+    
 def add_following_to_db(followerID, followedID, followDate):
     try:
         if is_following_exists(followerID, followedID):

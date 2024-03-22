@@ -39,7 +39,7 @@ def get_user_followers_controller(followerID):
         if following_list:
             return jsonify(following_list), 200
         else:
-            return jsonify({'message': 'Followings not found'}), 404
+            return jsonify({'message': 'Followings not found'}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -51,7 +51,7 @@ def get_user_followed_controller(followedID):
         if following_list:
             return jsonify(following_list), 200
         else:
-            return jsonify({'message': 'Followings not found'}), 404
+            return jsonify({'message': 'Followings not found'}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -65,7 +65,7 @@ def is_following_exists_controller():
         followedID = request_data.get("followedID")
         
         if followerID is None or followedID is None:
-            return jsonify({'error': 'followerID and followedID are required parameters'}), 400
+            return jsonify({'error': 'followerID and followedID are required parameters'}), 200
         
         exists = is_following_exists(followerID, followedID)
         return jsonify({'exists': exists}), 200
