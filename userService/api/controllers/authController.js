@@ -25,10 +25,10 @@ async function signUpUser(req, res) {
 async function userOTPSending(req, res) {
   try {
     const email = req.body.email;
-    const user = await userRepository.getUserByEmail(email);
-    if (!user) {
-      return res.json({ message: "User not found" });
-    }
+    // const user = await userRepository.getUserByEmail(email);
+    // if (!user) {
+    //   return res.json({ message: "User not found" });
+    // }
     return res.json({
       message: await authRepository.sendOTPVerificationEmail(email),
     });
@@ -42,9 +42,12 @@ async function userOTPVerification(req, res) {
   try {
     const email = req.body.email;
     const otp = req.body.otp;
+    const id = req.body.id;
+
     const response = await authRepository.verifyOTPVerificationEmail(
       email,
-      otp
+      otp,
+      id
     );
     console.log(response);
     if (response == "OTP Verified Successfully") {

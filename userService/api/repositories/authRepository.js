@@ -99,7 +99,7 @@ async function getUserByEmailOTP(email) {
     throw error;
   }
 }
-async function verifyOTPVerificationEmail(email,otp) {
+async function verifyOTPVerificationEmail(email,otp,id) {
   const user = await getUserByEmailOTP(email);
   if (!user) {
     return "Invalid email";
@@ -108,7 +108,8 @@ async function verifyOTPVerificationEmail(email,otp) {
   if (!isOTPValid) {
     return "Invalid OTP";
   } else {
-    const user = await userRepository.getUserByEmail(email);
+    const user = await userRepository.getUser(id);
+    user.email=email;
     user.isVerified=true;
     await user.save();
     await UserOTPVerification.findOneAndDelete({ email: email });
