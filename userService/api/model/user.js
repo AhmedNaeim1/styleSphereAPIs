@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { BOOLEAN } = require("sequelize");
 
 const userSchema = new mongoose.Schema(
   {
@@ -22,6 +23,8 @@ const userSchema = new mongoose.Schema(
     preferredOccasions: [{ type: String },  { default: [] } ],
     preferredFits: [{ type: String }, { default: [] } ],
     token: { type: String },
+    isVerified: { type: Boolean, default: false},
+
   },
   { collection: "user" }
 );

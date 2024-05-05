@@ -22,6 +22,43 @@ async function signUpUser(req, res) {
   }
 }
 
+async function userOTPSending(req, res) {
+  try {
+    const email = req.body.email;
+    const user = await userRepository.getUserByEmail(email);
+    if (!user) {
+      return res.json({ message: "User not found" });
+    }
+    return res.json({
+      message: await authRepository.sendOTPVerificationEmail(email),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+async function userOTPVerification(req, res) {
+  try {
+    const email = req.body.email;
+    const otp = req.body.otp;
+    const response = await authRepository.verifyOTPVerificationEmail(
+      email,
+      otp
+    );
+    console.log(response);
+    if (response == "OTP Verified Successfully") {
+      const user = await userRepository.getUserByEmail(email);
+      
+      return res.status(200).json(user);;
+    } else {
+      return res.json({ message: response });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
 async function loginUser(req, res) {
   try {
     const email = req.body.email;
@@ -50,4 +87,6 @@ module.exports = {
   signUpUser,
   loginUser,
   logoutUser,
+  userOTPSending,
+  userOTPVerification,
 };

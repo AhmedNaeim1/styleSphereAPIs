@@ -15,6 +15,8 @@ router.delete("/:userID", userController.deleteUser);
 router.post("/signup", authController.signUpUser);
 router.post("/login", authController.loginUser);
 router.post("/logout", authController.logoutUser);
+router.post( "/userOTPVerification",authController.userOTPVerification);
+router.post("/userOTPSending", authController.userOTPSending);
 
 // User preferences routes
 router.put("/:userID/preferences", userPrefController.updateUserPreferences);
