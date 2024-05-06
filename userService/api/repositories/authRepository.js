@@ -117,10 +117,21 @@ async function verifyOTPVerificationEmail(email,otp,id) {
     return "OTP Verified Successfully";
   }
 }
+
+async function updatePassword(user, password) {
+  
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  user.password = hashedPassword;
+  await user.save();
+  return user;
+}
+
 module.exports = {
   signupUser,
   loginUser,
   logoutUser,
   sendOTPVerificationEmail,
   verifyOTPVerificationEmail,
+  updatePassword,
 };

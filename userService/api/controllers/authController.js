@@ -22,13 +22,36 @@ async function signUpUser(req, res) {
   }
 }
 
+async function changePassword(req, res) {
+  try {
+    
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+
+
+    const user = await userRepository.getUser(req.params.userID);
+    if (!user) {
+      return res.json({ message: "User not found" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordValid) {
+      return res.json({ message: "Invalid password" });
+    }
+    else{
+      return res.json( await authRepository.updatePassword(user, newPassword) );
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+}
+}
+
 async function userOTPSending(req, res) {
   try {
     const email = req.body.email;
-    // const user = await userRepository.getUserByEmail(email);
-    // if (!user) {
-    //   return res.json({ message: "User not found" });
-    // }
+    
     return res.json({
       message: await authRepository.sendOTPVerificationEmail(email),
     });
@@ -92,4 +115,5 @@ module.exports = {
   logoutUser,
   userOTPSending,
   userOTPVerification,
+  changePassword,
 };
