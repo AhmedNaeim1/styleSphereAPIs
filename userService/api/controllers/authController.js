@@ -24,34 +24,33 @@ async function signUpUser(req, res) {
 
 async function changePassword(req, res) {
   try {
-    
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
-
 
     const user = await userRepository.getUser(req.params.userID);
     if (!user) {
       return res.json({ message: "User not found" });
     }
-
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
-    if (!isPasswordValid) {
-      return res.json({ message: "Invalid password" });
+    if (oldPassword == "") {
+      return res.json(await authRepository.updatePassword(user, newPassword));
+    } else {
+      const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+      if (!isPasswordValid) {
+        return res.json({ message: "Invalid password" });
+      } else {
+        return res.json(await authRepository.updatePassword(user, newPassword));
+      }
     }
-    else{
-      return res.json( await authRepository.updatePassword(user, newPassword) );
-    }
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
-}
+  }
 }
 
 async function userOTPSending(req, res) {
   try {
     const email = req.body.email;
-    
+
     return res.json({
       message: await authRepository.sendOTPVerificationEmail(email),
     });
@@ -75,8 +74,8 @@ async function userOTPVerification(req, res) {
     console.log(response);
     if (response == "OTP Verified Successfully") {
       const user = await userRepository.getUserByEmail(email);
-      
-      return res.status(200).json(user);;
+
+      return res.status(200).json(user);
     } else {
       return res.json({ message: response });
     }

@@ -10,8 +10,7 @@ const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
   host: "smtp-mail.outlook.com",
-  
-  
+
   auth: {
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASSWORD,
@@ -70,7 +69,7 @@ async function logoutUser(userID) {
 
 async function sendOTPVerificationEmail(email) {
   const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-  
+
   const mailOptions = {
     from: process.env.AUTH_EMAIL,
     to: email,
@@ -93,13 +92,19 @@ async function sendOTPVerificationEmail(email) {
 
 async function getUserByEmailOTP(email) {
   try {
-    const user = await UserOTPVerification.findOne({ userEmail: email });
+    const user = await UserOTPVerification.findOne({
+      userEmail: email,
+      expiresAt: { $gt: Date.now() },
+    })
+      .sort({ createdAt: -1 })
+      .exec();
+
     return user;
   } catch (error) {
     throw error;
   }
 }
-async function verifyOTPVerificationEmail(email,otp,id) {
+async function verifyOTPVerificationEmail(email, otp, id) {
   const user = await getUserByEmailOTP(email);
   if (!user) {
     return "Invalid email";
@@ -108,18 +113,21 @@ async function verifyOTPVerificationEmail(email,otp,id) {
   if (!isOTPValid) {
     return "Invalid OTP";
   } else {
-    const user = await userRepository.getUser(id);
-    user.email=email;
-    user.isVerified=true;
+    if (id == "" || id == null) {
+      const user = await userRepository.getUserByEmail(email);
+    } else {
+      const user = await userRepository.getUser(id);
+    }
+    user.email = email;
+    user.isVerified = true;
     await user.save();
     await UserOTPVerification.findOneAndDelete({ email: email });
-   
+
     return "OTP Verified Successfully";
   }
 }
 
 async function updatePassword(user, password) {
-  
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   user.password = hashedPassword;
