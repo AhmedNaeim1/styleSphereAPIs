@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/payments")
 public class paymentsController {
     private final paymentRepository paymentRepository;
 
-    public paymentsController(
-            paymentRepository paymentRepository) {
+    public paymentsController(paymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
     }
 
@@ -22,7 +22,7 @@ public class paymentsController {
     }
 
     @DeleteMapping("/{paymentMethodID}/{userID}")
-    public Boolean deletePayment(@PathVariable int paymentMethodID, @PathVariable int userID) {
+    public Boolean deletePayment(@PathVariable int paymentMethodID, @PathVariable String userID) {
         return paymentRepository.deletePayment(paymentMethodID, userID);
     }
 
@@ -32,17 +32,17 @@ public class paymentsController {
     }
 
     @GetMapping("/get-payment/{paymentMethodID}/{userID}")
-    public paymentModel getPayment(@PathVariable int paymentMethodID,@PathVariable int userID) {
+    public paymentModel getPayment(@PathVariable int paymentMethodID,@PathVariable String userID) {
         return paymentRepository.getPaymentById(paymentMethodID,userID);
     }
 
     @PutMapping("/update-payment/{paymentMethodID}/{userID}")
-    public boolean updatePayment(@PathVariable int paymentMethodID,@PathVariable int userID, @RequestBody paymentModel payment) {
+    public boolean updatePayment(@PathVariable int paymentMethodID,@PathVariable String userID, @RequestBody paymentModel payment) {
         return paymentRepository.updatePayment(paymentMethodID,userID, payment);
     }
 
     @GetMapping("/get-user-payment/{userID}")
-    public List<paymentModel> getUserPayments(@PathVariable int userID) {
+    public List<paymentModel> getUserPayments(@PathVariable String userID) {
         return paymentRepository.getUserPayments(userID);
     }
 }

@@ -2,7 +2,8 @@ package com.ahmednaeim.checkoutService.models;
 
 public class paymentModel {
     private int paymentMethodID;
-    private int userID;
+    private String userID;
+    private String name;
 
     private String cardNumber;
     private String expirationDate;
@@ -12,9 +13,10 @@ public class paymentModel {
     public paymentModel() {
     }
 
-    public paymentModel(int paymentMethodID,int userID, String cardNumber, String expirationDate, String billingAddress) {
+    public paymentModel(int paymentMethodID,String userID,String name, String cardNumber, String expirationDate, String billingAddress) {
         this.paymentMethodID = paymentMethodID;
         this.userID = userID;
+        this.name = name;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.billingAddress = billingAddress;
@@ -27,12 +29,19 @@ public class paymentModel {
     public void setPaymentMethodID(int paymentMethodID) {
         this.paymentMethodID = paymentMethodID;
     }
-    public int getUserID() {
+    public String getUserID() {
         return this.userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
+    }
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCardNumber() {
