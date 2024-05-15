@@ -27,7 +27,6 @@ public class paymentRepository {
                 payment.setName(rs.getString("Name"));
                 payment.setCardNumber(rs.getString("CardNumber"));
                 payment.setExpirationDate(rs.getString("ExpirationDate"));
-                payment.setBillingAddress(rs.getString("BillingAddress"));
                 paymentList.add(payment);
             }
 
@@ -52,7 +51,6 @@ public class paymentRepository {
 
                 payment.setCardNumber(rs.getString("CardNumber"));
                 payment.setExpirationDate(rs.getString("ExpirationDate"));
-                payment.setBillingAddress(rs.getString("BillingAddress"));
                 return payment;
             } else {
                 return null;
@@ -64,14 +62,13 @@ public class paymentRepository {
     }
 
     public boolean addPayment(paymentModel payment) {
-        try (PreparedStatement ps = con.prepareStatement("INSERT INTO Payments (PaymentMethodID, UserID, CardNumber, ExpirationDate, BillingAddress,Name) VALUES (?, ?, ?, ?, ?,?)")) {
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO Payments (PaymentMethodID, UserID, CardNumber, ExpirationDate,Name) VALUES (?, ?, ?, ?, ?)")) {
             ps.setInt(1, payment.getPaymentMethodID());
             ps.setString(2, payment.getUserID());
 
             ps.setString(3, payment.getCardNumber());
             ps.setString(4, payment.getExpirationDate());
-            ps.setString(5, payment.getBillingAddress());
-            ps.setString( 6,payment.getName());
+            ps.setString( 5,payment.getName());
 
 
             int rowsAffected = ps.executeUpdate();
@@ -83,13 +80,12 @@ public class paymentRepository {
     }
 
     public boolean updatePayment(int paymentMethodID,String userID, paymentModel payment) {
-        try (PreparedStatement ps = con.prepareStatement("UPDATE Payments SET CardNumber = ?, ExpirationDate = ?, BillingAddress = ?, Name=? WHERE PaymentMethodID = ? AND UserID=?")) {
+        try (PreparedStatement ps = con.prepareStatement("UPDATE Payments SET CardNumber = ?, ExpirationDate = ?, Name=? WHERE PaymentMethodID = ? AND UserID=?")) {
             ps.setString(1, payment.getCardNumber());
             ps.setString(2, payment.getExpirationDate());
-            ps.setString(3, payment.getBillingAddress());
-            ps.setString( 4,payment.getName());
-            ps.setInt(5, paymentMethodID);
-            ps.setString(6, userID);
+            ps.setString( 3,payment.getName());
+            ps.setInt(4, paymentMethodID);
+            ps.setString(5, userID);
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -112,7 +108,6 @@ public class paymentRepository {
                 payment.setName(rs.getString("Name"));
                 payment.setCardNumber(rs.getString("CardNumber"));
                 payment.setExpirationDate(rs.getString("ExpirationDate"));
-                payment.setBillingAddress(rs.getString("BillingAddress"));
                 userPayments.add(payment);
             }
 
@@ -122,14 +117,36 @@ public class paymentRepository {
             return null;
         }
     }
+
+
     public boolean deletePayment(int paymentMethodID, String userID) {
         try {
-            String query = "DELETE FROM Payments WHERE PaymentMethodID = " + paymentMethodID + " AND UserID = " + userID;
-            int rowsAffected = stmt.executeUpdate(query);
-            return rowsAffected > 0;
+            String deleteQuery = "DELETE FROM Payments WHERE PaymentMethodID = ? AND UserID = ?";
+            PreparedStatement deleteStatement = con.prepareStatement(deleteQuery);
+            deleteStatement.setInt(1, paymentMethodID);
+            deleteStatement.setString(2, userID);
+
+            int rowsAffected = deleteStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+
+                if (paymentMethodID == 1 || paymentMethodID == 2) {
+                    String updateQuery = "UPDATE Payments SET PaymentMethodID = PaymentMethodID - 1 WHERE UserID = ?";
+                    PreparedStatement updateStatement = con.prepareStatement(updateQuery);
+                    updateStatement.setString(1, userID);
+                    updateStatement.executeUpdate();
+                }
+
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+
+
+
 }

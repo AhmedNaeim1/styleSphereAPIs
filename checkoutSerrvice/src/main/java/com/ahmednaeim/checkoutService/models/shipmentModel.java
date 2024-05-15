@@ -2,21 +2,27 @@ package com.ahmednaeim.checkoutService.models;
 
 public class shipmentModel {
     private int shippingAddressID;
-    private int userID;
+    private String userID;
 
     private String shippingAddress;
-    private String preferredShippingMethod;
+    private String name;
+    private String phoneNumber;
+    private String country;
+    private String city;
 
 
 
     public shipmentModel() {
     }
 
-    public shipmentModel(int shippingAddressID, int userID, String shippingAddress, String preferredShippingMethod) {
+    public shipmentModel(int shippingAddressID, String userID, String shippingAddress, String name, String phoneNumber, String country, String city) {
         this.shippingAddressID = shippingAddressID;
         this.userID = userID;
         this.shippingAddress = shippingAddress;
-        this.preferredShippingMethod = preferredShippingMethod;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.country = country;
+        this.city = city;
     }
 
     public int getShippingAddressID() {
@@ -26,11 +32,11 @@ public class shipmentModel {
     public void setShippingAddressID(int shippingAddressID) {
         this.shippingAddressID = shippingAddressID;
     }
-    public int getUserID() {
+    public String getUserID() {
         return this.userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -40,12 +46,34 @@ public class shipmentModel {
 
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
-    }public String getPreferredShippingMethod() {
-        return this.preferredShippingMethod;
+    }
+    public String getName() {
+        return this.name;
     }
 
-    public void setPreferredShippingMethod(String preferredShippingMethod) {
-        this.preferredShippingMethod = preferredShippingMethod;
+    public void setName(String name) {
+        this.name = name;
+    }
+ public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+ public String getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+ public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
 

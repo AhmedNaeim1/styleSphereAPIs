@@ -23,9 +23,12 @@ public class shippingRepository {
             while (rs.next()) {
                 shipmentModel shipment = new shipmentModel();
                 shipment.setShippingAddressID(rs.getInt("ShippingAddressID"));
-                shipment.setUserID(rs.getInt("UserID"));
+                shipment.setUserID(rs.getString("UserID"));
                 shipment.setShippingAddress(rs.getString("ShippingAddress"));
-                shipment.setPreferredShippingMethod(rs.getString("PreferredShippingMethod"));
+                shipment.setName(rs.getString("Name"));
+                shipment.setPhoneNumber(rs.getString("PhoneNumber"));
+                shipment.setCountry(rs.getString("Country"));
+                shipment.setCity(rs.getString("City"));
                 shipmentList.add(shipment);
             }
 
@@ -36,18 +39,21 @@ public class shippingRepository {
         }
     }
 
-    public shipmentModel getShipmentById(int shippingAddressID, int userID) {
+    public shipmentModel getShipmentById(int shippingAddressID, String userID) {
         try (PreparedStatement ps = con.prepareStatement("SELECT * FROM ShippingAddress WHERE ShippingAddressID = ? AND UserID = ?")) {
             ps.setInt(1, shippingAddressID);
-            ps.setInt(2, userID);
+            ps.setString(2, userID);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 shipmentModel shipment = new shipmentModel();
                 shipment.setShippingAddressID(rs.getInt("ShippingAddressID"));
-                shipment.setUserID(rs.getInt("UserID"));
+                shipment.setUserID(rs.getString("UserID"));
                 shipment.setShippingAddress(rs.getString("ShippingAddress"));
-                shipment.setPreferredShippingMethod(rs.getString("PreferredShippingMethod"));
+                shipment.setName(rs.getString("Name"));
+                shipment.setPhoneNumber(rs.getString("PhoneNumber"));
+                shipment.setCountry(rs.getString("Country"));
+                shipment.setCity(rs.getString("City"));
                 return shipment;
             } else {
                 return null;
@@ -59,11 +65,14 @@ public class shippingRepository {
     }
 
     public boolean addShipment(shipmentModel shipment) {
-        try (PreparedStatement ps = con.prepareStatement("INSERT INTO ShippingAddress (ShippingAddressID, UserID, ShippingAddress, PreferredShippingMethod) VALUES (?, ?, ?, ?)")) {
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO ShippingAddress (ShippingAddressID, UserID, ShippingAddress, Name,PhoneNumber,Country,City) VALUES (?, ?, ?, ?,?, ?, ?)")) {
             ps.setInt(1, shipment.getShippingAddressID());
-            ps.setInt(2, shipment.getUserID());
+            ps.setString(2, shipment.getUserID());
             ps.setString(3, shipment.getShippingAddress());
-            ps.setString(4, shipment.getPreferredShippingMethod());
+            ps.setString(4, shipment.getName());
+            ps.setString(5, shipment.getPhoneNumber());
+            ps.setString(6, shipment.getCountry());
+            ps.setString(7, shipment.getCity());
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -73,12 +82,16 @@ public class shippingRepository {
         }
     }
 
-    public boolean updateShipment(int shippingAddressID, int userID, shipmentModel shipment) {
-        try (PreparedStatement ps = con.prepareStatement("UPDATE ShippingAddress SET ShippingAddress = ?, PreferredShippingMethod = ? WHERE ShippingAddressID = ? AND UserID = ?")) {
+    public boolean updateShipment(int shippingAddressID, String userID, shipmentModel shipment) {
+        try (PreparedStatement ps = con.prepareStatement("UPDATE ShippingAddress SET ShippingAddress = ?, Name = ?,PhoneNumber=?,Country=?,City=? WHERE ShippingAddressID = ? AND UserID = ?")) {
             ps.setString(1, shipment.getShippingAddress());
-            ps.setString(2, shipment.getPreferredShippingMethod());
-            ps.setInt(3, shippingAddressID);
-            ps.setInt(4, userID);
+            ps.setString(2, shipment.getName());
+            ps.setString(3, shipment.getPhoneNumber());
+            ps.setString(4, shipment.getCountry());
+            ps.setString(5, shipment.getCity());
+            ps.setInt(6, shippingAddressID);
+            ps.setString(7, userID);
+
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
@@ -88,18 +101,22 @@ public class shippingRepository {
         }
     }
 
-    public List<shipmentModel> getUserShipments(int userID) {
+    public List<shipmentModel> getUserShipments(String userID) {
         try (PreparedStatement ps = con.prepareStatement("SELECT * FROM ShippingAddress WHERE UserID = ?")) {
-            ps.setInt(1, userID);
+            ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
 
             List<shipmentModel> userShipments = new ArrayList<>();
             while (rs.next()) {
                 shipmentModel shipment = new shipmentModel();
                 shipment.setShippingAddressID(rs.getInt("ShippingAddressID"));
-                shipment.setUserID(rs.getInt("UserID"));
+                shipment.setUserID(rs.getString("UserID"));
                 shipment.setShippingAddress(rs.getString("ShippingAddress"));
-                shipment.setPreferredShippingMethod(rs.getString("PreferredShippingMethod"));
+                shipment.setName(rs.getString("Name"));
+                shipment.setPhoneNumber(rs.getString("PhoneNumber"));
+                shipment.setCountry(rs.getString("Country"));
+                shipment.setCity(rs.getString("City"));
+
                 userShipments.add(shipment);
             }
 
@@ -110,11 +127,30 @@ public class shippingRepository {
         }
     }
 
-    public boolean deleteShipment(int shippingAddressID, int userID) {
+    public boolean deleteShipment(int shippingAddressID, String userID) {
         try {
-            String query = "DELETE FROM ShippingAddress WHERE ShippingAddressID = " + shippingAddressID + " AND UserID = " + userID;
-            int rowsAffected = stmt.executeUpdate(query);
-            return rowsAffected > 0;
+
+
+            String deleteQuery = "DELETE FROM ShippingAddress WHERE ShippingAddressID = ? AND UserID = ?";
+            PreparedStatement deleteStatement = con.prepareStatement(deleteQuery);
+            deleteStatement.setInt(1, shippingAddressID);
+            deleteStatement.setString(2, userID);
+
+            int rowsAffected = deleteStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+
+                if (shippingAddressID == 1 || shippingAddressID == 2) {
+                    String updateQuery = "UPDATE ShippingAddress SET ShippingAddressID = shippingAddressIDa - 1 WHERE UserID = ?";
+                    PreparedStatement updateStatement = con.prepareStatement(updateQuery);
+                    updateStatement.setString(1, userID);
+                    updateStatement.executeUpdate();
+                }
+
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

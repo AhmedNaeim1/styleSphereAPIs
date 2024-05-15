@@ -22,7 +22,7 @@ public class shippingController {
     }
 
     @DeleteMapping("/{shippingAddressID}/{userID}")
-    public Boolean deleteShipment(@PathVariable int shippingAddressID, @PathVariable int userID) {
+    public Boolean deleteShipment(@PathVariable int shippingAddressID, @PathVariable String userID) {
         return shippingRepository.deleteShipment(shippingAddressID, userID);
     }
 
@@ -32,18 +32,18 @@ public class shippingController {
     }
 
     @GetMapping("/get-shipment/{shippingAddressID}/{userID}")
-    public shipmentModel getShipment(@PathVariable int shippingAddressID, @PathVariable int userID) {
+    public shipmentModel getShipment(@PathVariable int shippingAddressID, @PathVariable String userID) {
         return shippingRepository.getShipmentById(shippingAddressID, userID);
     }
 
     @PutMapping("/update-shipment/{shippingAddressID}/{userID}")
-    public boolean updateShipment(@PathVariable int shippingAddressID, @PathVariable int userID, @RequestBody shipmentModel shipment) {
+    public boolean updateShipment(@PathVariable int shippingAddressID, @PathVariable String userID, @RequestBody shipmentModel shipment) {
         return shippingRepository.updateShipment(shippingAddressID, userID, shipment);
     }
 
 
     @GetMapping("/get-user-shipments/{userID}")
-    public List<shipmentModel> getUserShipments(@PathVariable int userID) {
+    public List<shipmentModel> getUserShipments(@PathVariable String userID) {
         return shippingRepository.getUserShipments(userID);
     }
 }

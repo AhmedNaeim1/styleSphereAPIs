@@ -7,19 +7,17 @@ public class paymentModel {
 
     private String cardNumber;
     private String expirationDate;
-    private String billingAddress;
 
 
     public paymentModel() {
     }
 
-    public paymentModel(int paymentMethodID,String userID,String name, String cardNumber, String expirationDate, String billingAddress) {
+    public paymentModel(int paymentMethodID,String userID,String name, String cardNumber, String expirationDate) {
         this.paymentMethodID = paymentMethodID;
         this.userID = userID;
         this.name = name;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
-        this.billingAddress = billingAddress;
     }
 
     public int getPaymentMethodID() {
@@ -56,14 +54,7 @@ public class paymentModel {
 
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
-    }public String getBillingAddress() {
-        return this.billingAddress;
     }
-
-    public void setBillingAddress(String billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
 
 
 }
