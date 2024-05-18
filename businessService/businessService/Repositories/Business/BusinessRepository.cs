@@ -25,13 +25,13 @@ namespace businessService.Repositories.Business
             return await connection.QueryAsync<BusinessModel>(sqlQuery);
         }
 
-        public async Task<BusinessModel> getBusiness(int id)
+        public async Task<BusinessModel> getBusiness(string id)
         {
-            var sqlQuery = "SELECT * FROM business WHERE businessID=@businessID";
+            var sqlQuery = "SELECT * FROM business WHERE userID=@userID";
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                return await connection.QueryFirstOrDefaultAsync<BusinessModel>(sqlQuery, new { businessID = id });
+                return await connection.QueryFirstOrDefaultAsync<BusinessModel>(sqlQuery, new { userID = id });
             }
         }
 
@@ -42,8 +42,8 @@ namespace businessService.Repositories.Business
                 throw new ArgumentException("User ID and Business ID must be equal.");
             }
 
-            var sqlQuery = "INSERT INTO business (businessID, userID, businessName, contactInfo, billingAddress, businessCategory, dateCreated) " +
-                           "VALUES (@businessID, @userID, @businessName, @contactInfo, @billingAddress, @businessCategory, @dateCreated) " +
+            var sqlQuery = "INSERT INTO business (businessID, userID, businessName, contactInfo, billingAddress, businessCategory, dateCreated,bio) " +
+                           "VALUES (@businessID, @userID, @businessName, @contactInfo, @billingAddress, @businessCategory, @dateCreated,@bio) " +
                            "RETURNING *";
 
             using (var connection = new NpgsqlConnection(_connectionString))
@@ -56,7 +56,7 @@ namespace businessService.Repositories.Business
         public async Task updateBusiness(BusinessModel business)
         {
             var sqlQuery = "UPDATE business " +
-                           "SET businessName=@businessName, contactInfo=@contactInfo, billingAddress=@billingAddress, businessCategory=@businessCategory " +
+                           "SET businessName=@businessName, contactInfo=@contactInfo, billingAddress=@billingAddress, businessCategory=@businessCategory, bio=@bio " +
                            "WHERE businessID=@businessID";
 
             using (var connection = new NpgsqlConnection(_connectionString))
@@ -65,13 +65,13 @@ namespace businessService.Repositories.Business
             }
         }
 
-        public async Task deleteBusiness(int id)
+        public async Task deleteBusiness(string id)
         {
-            var sqlQuery = "DELETE FROM business WHERE businessID=@businessID";
+            var sqlQuery = "DELETE FROM business WHERE userID=@userID";
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                await connection.ExecuteAsync(sqlQuery, new { businessID = id });
+                await connection.ExecuteAsync(sqlQuery, new { userID = id });
             }
         }
     }

@@ -7,10 +7,10 @@ namespace businessService.Repositories.Business
 	{
         
             Task<IEnumerable<BusinessModel>> getAllBusinesses();
-            Task<BusinessModel> getBusiness(int id);
+            Task<BusinessModel> getBusiness(string id);
             Task<BusinessModel> createBusiness(BusinessModel user);
             Task updateBusiness(BusinessModel user);
-            Task deleteBusiness(int id);
+            Task deleteBusiness(string id);
      
     }
 }

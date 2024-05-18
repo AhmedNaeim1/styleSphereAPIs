@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{B98C28C0-57B4-493B-9155-D0C32BE93D95}|https">
+  <MonoDevelop.Ide.ItemProperties.businessService PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="businessService/Controllers/businessController.cs">
+    <Files>
+      <File FileName="businessService/Controllers/businessController.cs" Line="21" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="businessService">
+            <Node name="businessService" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="businessController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>

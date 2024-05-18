@@ -26,7 +26,7 @@ namespace businessService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BusinessModel>> GetBusiness(int id)
+        public async Task<ActionResult<BusinessModel>> GetBusiness(string id)
         {
             var business = await _businessRepository.getBusiness(id);
             if (business == null)
@@ -57,7 +57,7 @@ namespace businessService.Controllers
 
 
         [HttpPut("updateBusiness/{id}")]
-        public async Task<IActionResult> UpdateBusiness(int id, [FromBody] BusinessModel business)
+        public async Task<IActionResult> UpdateBusiness(string id, [FromBody] BusinessModel business)
         {
             if (id != business.businessID)
             {
@@ -82,7 +82,7 @@ namespace businessService.Controllers
 
 
         [HttpDelete("deleteBusiness/{id}")]
-        public async Task<IActionResult> DeleteBusiness(int id)
+        public async Task<IActionResult> DeleteBusiness(string id)
         {
             var businessToDelete = await _businessRepository.getBusiness(id);
             if (businessToDelete == null)
