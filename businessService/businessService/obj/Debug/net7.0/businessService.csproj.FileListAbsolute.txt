@@ -162,9 +162,10 @@
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/staticwebassets.build.json
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/staticwebassets.development.json
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/scopedcss/bundle/businessService.styles.css
-/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/businessService.csproj.CopyComplete
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/businessService.dll
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/refint/businessService.dll
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/businessService.pdb
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/businessService.genruntimeconfig.cache
 /Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/ref/businessService.dll
+/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/businessService.sourcelink.json
+/Users/tamerhamdy/Documents/GitHub/styleSphereAPIs/businessService/businessService/obj/Debug/net7.0/business.C6CEDF9F.Up2Date

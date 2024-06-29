@@ -1,3 +1,5 @@
+const express = require("express");
+const router = express.Router();
 const axios = require("axios");
 
 async function createOrder(req, res) {
@@ -46,7 +48,7 @@ async function updateOrderStatus(req, res) {
   try {
     const orderID = req.params.orderID;
     const status = req.body.status;
-    const result = await axios.put(`http://127.0.0.1:5001/update-order-status/${orderID}`,req.body);
+    const result = await axios.put(`http://127.0.0.1:5001/update-order-status/${orderID}`, req.body);
     res.json(result.data);
   } catch (error) {
     console.error(error);

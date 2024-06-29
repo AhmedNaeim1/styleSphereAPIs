@@ -3,10 +3,7 @@ const axios = require("axios");
 async function updateUserPreferences(req, res) {
   try {
     const userID = req.params.userID;
-    const user = await axios.put(
-      `http://localhost:3005/user/${userID}`,
-      req.body
-    );
+    const user = await axios.put(`http://localhost:3005/user/${userID}/preferences`, req.body);
     res.json(user.data);
   } catch (error) {
     console.error(error);
@@ -16,9 +13,7 @@ async function updateUserPreferences(req, res) {
 
 async function getUserPreferences(req, res) {
   try {
-    const user = await axios.get(
-      `http://localhost:3005/user/${req.params.userID}`
-    );
+    const user = await axios.get(`http://localhost:3005/user/${req.params.userID}/preferences`);
     res.json(user.data);
   } catch (error) {
     console.error(error);

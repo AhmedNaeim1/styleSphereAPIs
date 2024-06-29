@@ -13,7 +13,7 @@ async function getUser(req, res) {
 
 async function updateUser(req, res) {
   try {
-    const userID= req.params.userID;
+    const userID = req.params.userID;
     const user = await axios.put(`http://localhost:3005/user/${userID}`, req.body);
     res.json(user.data);
   } catch (error) {

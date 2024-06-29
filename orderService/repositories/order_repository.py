@@ -4,15 +4,37 @@ from models import orderModel
 import uuid
 
 # Add order to the database
-def add_order_to_db(orderID, userID, productID, quantity, orderDate, price, discount, status):
+import uuid
+from datetime import datetime
+
+def add_order_to_db(userID, productIDs, quantities, totalPrice, addressID, paymentMethodID):
     try:
-        order = orderModel.Order(orderID=uuid.uuid4().hex , userID=userID, productID=productID, quantity=quantity, 
-                      orderDate=orderDate, price=price, discount=discount, status=status)
+        orderID = uuid.uuid4().hex
+        orderDate = datetime.now()
+        discount = 0  # Assuming discount is not provided and is set to 0
+        status = 'pending'  # Assuming default status is 'pending'
+
+        # Create a single order entry with productIDs and quantities as lists
+        order = orderModel.Order(
+            orderID=orderID,
+            userID=userID,
+            productIDs=productIDs,  # Storing productIDs as a list
+            quantities=quantities,  # Storing quantities as a list
+            orderDate=orderDate,
+            totalPrice=totalPrice,
+            discount=discount,
+            status=status,
+            addressID=addressID,
+            paymentMethodID=paymentMethodID
+        )
+        
         db.session.add(order)
         db.session.commit()
-        return 'Order added successfully'
+        return True
     except Exception as e:
-        return str(e), 500
+        print(str(e))  # Log the error for debugging purposes
+        return False
+
 
 # Get order by orderID
 def get_order_by_id(orderID):
@@ -20,7 +42,7 @@ def get_order_by_id(orderID):
         order = orderModel.Order.query.filter_by(orderid=orderID).first()
         if order:
             return {'orderid': order.orderid, 'userid': order.userid, 'productid': order.productid, 'quantity': order.quantity, 
-                    'orderdate': order.orderdate, 'price': order.price, 'discount': order.discount, 'status': order.status}
+                    'orderdate': order.orderdate, 'totalPrice': order.totalPrice, 'discount': order.discount, 'status': order.status}
         else:
             return None
     except Exception as e:
@@ -33,7 +55,7 @@ def get_orders():
         order_list = []
         for order in orders:
             order_list.append({'orderid': order.orderid, 'userid': order.userid, 'productid': order.productid, 'quantity': order.quantity, 
-                    'orderdate': order.orderdate, 'price': order.price, 'discount': order.discount, 'status': order.status})
+                    'orderdate': order.orderdate, 'totalPrice': order.totalPrice, 'discount': order.discount, 'status': order.status})
         return order_list
     except Exception as e:
         return str(e), 500

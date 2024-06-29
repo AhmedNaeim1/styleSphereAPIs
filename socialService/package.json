@@ -23,6 +23,9 @@
     "express": "^4.18.3",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "mysql2": "^3.10.1",
+    "ngrok": "^5.0.0-beta.2",
+    "sequelize": "^6.37.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

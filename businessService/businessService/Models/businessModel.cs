@@ -16,6 +16,8 @@ namespace businessService.Models
         public string? contactInfo  { get; set; }
         public string? billingAddress  { get; set; }
         public string? businessCategory { get; set; }
+        public string? businessUrl { get; set; }
+
         public DateTime? dateCreated { get; set; }
     }
 }

@@ -13,6 +13,25 @@ async function getProduct(req, res) {
   }
 }
 
+// POST /products/list - Retrieves multiple products by their IDs
+async function getMultipleProducts(req, res) {
+  try {
+    const { productIDs } = req.body;
+
+    if (!Array.isArray(productIDs)) {
+      return res.status(400).json({ error: 'Invalid request format, expected an array of productIDs' });
+    }
+    const products = await productRepository.getProducts(productIDs);
+    if (products.length === 0) {
+      return res.status(404).json({ error: { message: 'Not found' } });
+    }
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 // POST /products - Adds a new product
 async function addProduct(req, res) {
   try {
@@ -66,15 +85,23 @@ async function getProductsByCategory(req, res) {
   }
 }
 
-// GET /products?business={businessID} - Retrieves products associated with a specific business
+// GET /business/:businessID - Retrieves products associated with a specific business
 async function getProductsByBusiness(req, res) {
   try {
-    const products = await productRepository.getProductsByBusiness(req.query.business);
+    const businessID = req.params.businessID;
+    console.log(`Received businessID: ${businessID}`); // Debugging
+    if (!businessID) {
+      return res.status(400).json({ error: "Business ID is required" });
+    }
+    const products = await productRepository.getProductsByBusiness(businessID);
+    console.log(`Found products: ${products.length}`); // Debugging
     res.json(products);
   } catch (error) {
+    console.error(`Error fetching products for businessID: ${businessID}`, error); // Debugging
     res.status(500).json({ error: error.message });
   }
 }
+
 
 // GET /products/virtualTryOn - Retrieves all products that have virtual try-on enabled
 // async function getProductsWithVirtualTryOn(req, res) {
@@ -94,5 +121,6 @@ module.exports = {
   getAllProducts,
   getProductsByCategory,
   getProductsByBusiness,
+  getMultipleProducts,
   // getProductsWithVirtualTryOn
 };

@@ -8,6 +8,9 @@ const productController = require("../controllers/productController");
 // Retrieves product details by productID
 router.get("/:productID", productController.getProduct);
 
+// Retrieves products details by productID
+router.post("/list", productController.getMultipleProducts);
+
 // Updates product information by productID
 router.put("/:productID", productController.updateProduct);
 
@@ -21,7 +24,7 @@ router.get("/", productController.getAllProducts);
 router.get("/category", productController.getProductsByCategory);
 
 // Retrieves products by businessID
-router.get("/business", productController.getProductsByBusiness);
+router.get("/business/:businessID", productController.getProductsByBusiness);
 
 router.post("/", productController.addProduct);
 

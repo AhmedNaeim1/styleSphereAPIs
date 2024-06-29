@@ -14,6 +14,16 @@ async function getProduct(productID) {
   }
 }
 
+// Function to retrieve multiple products by their IDs
+async function getProducts(productIDs) {
+  try {
+    const products = await Product.find({ productID: { $in: productIDs } });
+    return products;
+  } catch (error) {
+    throw error;
+  }
+}
+
 // Update product information by productID
 async function updateProduct(productID, productData) {
   try {
@@ -33,15 +43,26 @@ async function deleteProduct(productID) {
   }
 }
 
-// Retrieve all products
+// Retrieve all products with a limit of 20
+// async function getAllProducts() {
+//   try {
+//     const products = await Product.find().limit(20);
+//     return products;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+// Retrieve the most recently added products with a limit of 20
 async function getAllProducts() {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ dateAdded: 1 }).limit(20);
     return products;
   } catch (error) {
     throw error;
   }
 }
+
+
 
 // Retrieve products by category
 async function getProductsByCategory(category) {
@@ -53,16 +74,20 @@ async function getProductsByCategory(category) {
   }
 }
 
-// Retrieve products by businessID
+// Retrieve products by businessID and sort by most recently added
 async function getProductsByBusiness(businessID) {
   try {
-    
-    const products = await Product.find({ businessID });
+    console.log(`Querying products for businessID: ${businessID}`); // Debugging
+    const products = await Product.find({ businessID: businessID }).sort({ dateAdded: -1 });
+    console.log(`Products found: ${products.length}`); // Debugging
     return products;
   } catch (error) {
+    console.error(`Error querying products for businessID: ${businessID}`, error); // Debugging
     throw error;
   }
 }
+
+
 
 // Create a new product
 async function addProduct(productData) {
@@ -96,5 +121,6 @@ module.exports = {
   getAllProducts,
   getProductsByCategory,
   getProductsByBusiness,
+  getProducts,
   // getProductsWithVirtualTryOn
 };

@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "ngrok": "^5.0.0-beta.2",
     "nodemailer": "^6.9.13",
     "uuid": "^9.0.1"
   },

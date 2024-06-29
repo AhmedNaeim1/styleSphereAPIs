@@ -3,17 +3,18 @@ const uuid = require("uuid");
 
 async function getAllCartItems(userID) {
   return new Promise((resolve, reject) => {
-    const query = "SELECT * FROM cart WHERE UserID = ?";
+    const query = "SELECT ProductID, Quantity FROM cart WHERE UserID = ?";
     pool.query(query, [userID], (err, rows) => {
       if (err) {
         reject(err);
       } else {
-        resolve(rows);
+        const productIDs = rows.map(row => row.ProductID);
+        const quantities = rows.map(row => row.Quantity);
+        resolve({ productIDs, quantities });
       }
     });
   });
 }
-
 async function addProductToCart(userID, productID, quantity, addedDate, price) {
   return new Promise((resolve, reject) => {
     const checkQuery = "SELECT * FROM cart WHERE UserID = ? AND ProductID = ?";
@@ -22,8 +23,17 @@ async function addProductToCart(userID, productID, quantity, addedDate, price) {
         reject(checkErr);
       } else {
         if (checkResult.length > 0) {
-          resolve({ message: "Product already exists in the cart" });
+          // Product exists in the cart, update the quantity
+          const updateQuery = "UPDATE cart SET Quantity = Quantity + ? WHERE UserID = ? AND ProductID = ?";
+          pool.query(updateQuery, [quantity, userID, productID], (updateErr, updateResult) => {
+            if (updateErr) {
+              reject(updateErr);
+            } else {
+              resolve({ message: "Product quantity updated in the cart" });
+            }
+          });
         } else {
+          // Product does not exist in the cart, insert it
           const insertQuery =
             "INSERT INTO cart (CartID, UserID, ProductID, Quantity, AddedDate, Price) VALUES (?, ?, ?, ?, ?, ?)";
           pool.query(
@@ -55,6 +65,7 @@ async function addProductToCart(userID, productID, quantity, addedDate, price) {
     });
   });
 }
+
 
 async function updateCartItemQuantity(userID, productID, quantity) {
   return new Promise((resolve, reject) => {

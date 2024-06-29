@@ -42,8 +42,8 @@ namespace businessService.Repositories.Business
                 throw new ArgumentException("User ID and Business ID must be equal.");
             }
 
-            var sqlQuery = "INSERT INTO business (businessID, userID, businessName, contactInfo, billingAddress, businessCategory, dateCreated,bio) " +
-                           "VALUES (@businessID, @userID, @businessName, @contactInfo, @billingAddress, @businessCategory, @dateCreated,@bio) " +
+            var sqlQuery = "INSERT INTO business (businessID, userID, businessName, contactInfo, billingAddress, businessCategory, dateCreated,bio,businessUrl) " +
+                           "VALUES (@businessID, @userID, @businessName, @contactInfo, @billingAddress, @businessCategory, @dateCreated,@bio,@businessUrl) " +
                            "RETURNING *";
 
             using (var connection = new NpgsqlConnection(_connectionString))
@@ -56,7 +56,7 @@ namespace businessService.Repositories.Business
         public async Task updateBusiness(BusinessModel business)
         {
             var sqlQuery = "UPDATE business " +
-                           "SET businessName=@businessName, contactInfo=@contactInfo, billingAddress=@billingAddress, businessCategory=@businessCategory, bio=@bio " +
+                           "SET businessName=@businessName, contactInfo=@contactInfo, billingAddress=@billingAddress, businessCategory=@businessCategory, bio=@bio, businessUrl=@businessUrl " +
                            "WHERE businessID=@businessID";
 
             using (var connection = new NpgsqlConnection(_connectionString))
